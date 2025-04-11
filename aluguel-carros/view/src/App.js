@@ -7,8 +7,10 @@ import ContratosList from './components/ContratosList';
 import AlugueisList from './components/AlugueisList';
 import CadastrarCliente from './components/CadastrarCliente';
 import CadastrarVeiculo from './components/CadastrarVeiculo';
+import CadastrarContrato from './components/CadastrarContrato';
 import EditarCliente from './components/EditarCliente';
 import EditarVeiculo from './components/EditarVeiculo';
+import EditarContrato from './components/EditarContrato';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/CadastrarVeiculo" element={<CadastrarVeiculo />} />
         <Route path="/editarVeiculo/:id" element={<EditarVeiculo />} />
         <Route path="/contratos" element={<ContratosList />} />
+        <Route path="/CadastrarContrato" element={<CadastrarContrato />} />
+        <Route path="/editarContrato/:id" element={<EditarContrato />} />
         <Route path="/alugueis" element={<AlugueisList />} />
       </Routes>
     </BrowserRouter>
