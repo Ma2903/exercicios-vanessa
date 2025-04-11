@@ -21,20 +21,22 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Atualizar veículo
 router.put('/:id', async (req, res) => {
     const { modelo, marca, ano } = req.body;
     try {
         await db.query('UPDATE veiculos SET modelo = ?, marca = ?, ano = ? WHERE id = ?', [modelo, marca, ano, req.params.id]);
-        res.json({ message: 'Veículo atualizado' });
+        res.json({ message: 'Veículo atualizado com sucesso!' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
+// Excluir veículo
 router.delete('/:id', async (req, res) => {
     try {
         await db.query('DELETE FROM veiculos WHERE id = ?', [req.params.id]);
-        res.json({ message: 'Veículo deletado' });
+        res.json({ message: 'Veículo excluído com sucesso!' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

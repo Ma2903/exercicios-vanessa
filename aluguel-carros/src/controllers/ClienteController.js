@@ -17,4 +17,21 @@ router.get('/', (req, res) => {
     });
 });
 
+// Atualizar cliente
+router.put('/:id', (req, res) => {
+    const { nome, telefone } = req.body;
+    ClienteModel.update(req.params.id, nome, telefone, (err) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: 'Cliente atualizado com sucesso!' });
+    });
+});
+
+// Excluir cliente
+router.delete('/:id', (req, res) => {
+    ClienteModel.delete(req.params.id, (err) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: 'Cliente excluído com sucesso!' });
+    });
+});
+
 module.exports = router;

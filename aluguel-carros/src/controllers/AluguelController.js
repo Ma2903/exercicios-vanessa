@@ -20,4 +20,24 @@ router.get('/', (req, res) => {
     });
 });
 
+// Atualizar aluguel
+router.put('/:id', (req, res) => {
+    const { id_veiculo, id_cliente, id_contrato, data_inicio, data_fim } = req.body;
+    db.query('UPDATE alugueis SET id_veiculo = ?, id_cliente = ?, id_contrato = ?, data_inicio = ?, data_fim = ? WHERE id = ?',
+        [id_veiculo, id_cliente, id_contrato, data_inicio, data_fim, req.params.id],
+        (err) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ message: 'Aluguel atualizado com sucesso!' });
+        }
+    );
+});
+
+// Excluir aluguel
+router.delete('/:id', (req, res) => {
+    db.query('DELETE FROM alugueis WHERE id = ?', [req.params.id], (err) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: 'Aluguel excluído com sucesso!' });
+    });
+});
+
 module.exports = router;

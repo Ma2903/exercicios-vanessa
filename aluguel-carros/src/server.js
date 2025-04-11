@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3333;
+const PORT = process.env.PORT || 3000;
 const db = require('./db');
 
 app.use(express.json());
@@ -17,6 +17,10 @@ app.use('/clientes', ClienteController);
 app.use('/contratos', ContratoController);
 app.use('/alugueis', AluguelController);
 
-app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+app.get('/', (req, res) => {
+    res.send('Servidor rodando!');
+});
+
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
