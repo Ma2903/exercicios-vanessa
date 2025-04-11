@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07-Mar-2025 às 18:03
--- Versão do servidor: 10.4.27-MariaDB
--- versão do PHP: 8.2.0
+-- Tempo de geração: 11/04/2025 às 06:58
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `alugueis`
+-- Estrutura para tabela `alugueis`
 --
 
 CREATE TABLE `alugueis` (
@@ -39,7 +39,7 @@ CREATE TABLE `alugueis` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `clientes`
+-- Estrutura para tabela `clientes`
 --
 
 CREATE TABLE `clientes` (
@@ -48,10 +48,17 @@ CREATE TABLE `clientes` (
   `telefone` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `clientes`
+--
+
+INSERT INTO `clientes` (`id`, `nome`, `telefone`) VALUES
+(4, 'Maria Oliveira teste', '987654321');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contratos`
+-- Estrutura para tabela `contratos`
 --
 
 CREATE TABLE `contratos` (
@@ -60,25 +67,40 @@ CREATE TABLE `contratos` (
   `valor` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `contratos`
+--
+
+INSERT INTO `contratos` (`id`, `tipo`, `valor`) VALUES
+(8, 'semanal', 1000.00);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `veiculos`
+-- Estrutura para tabela `veiculos`
 --
 
 CREATE TABLE `veiculos` (
   `id` int(11) NOT NULL,
   `modelo` varchar(255) NOT NULL,
   `marca` varchar(255) NOT NULL,
-  `ano` int(11) NOT NULL
+  `ano` int(11) NOT NULL,
+  `placa` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `veiculos`
+--
+
+INSERT INTO `veiculos` (`id`, `modelo`, `marca`, `ano`, `placa`) VALUES
+(3, 'dv vgf', 'vfxdvf', 2006, 'dshnaid');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `alugueis`
+-- Índices de tabela `alugueis`
 --
 ALTER TABLE `alugueis`
   ADD PRIMARY KEY (`id`),
@@ -87,25 +109,25 @@ ALTER TABLE `alugueis`
   ADD KEY `id_contrato` (`id_contrato`);
 
 --
--- Índices para tabela `clientes`
+-- Índices de tabela `clientes`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `contratos`
+-- Índices de tabela `contratos`
 --
 ALTER TABLE `contratos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `veiculos`
+-- Índices de tabela `veiculos`
 --
 ALTER TABLE `veiculos`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -118,26 +140,26 @@ ALTER TABLE `alugueis`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `contratos`
 --
 ALTER TABLE `contratos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `veiculos`
 --
 ALTER TABLE `veiculos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Restrições para despejos de tabelas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Limitadores para a tabela `alugueis`
+-- Restrições para tabelas `alugueis`
 --
 ALTER TABLE `alugueis`
   ADD CONSTRAINT `alugueis_ibfk_1` FOREIGN KEY (`id_veiculo`) REFERENCES `veiculos` (`id`),
