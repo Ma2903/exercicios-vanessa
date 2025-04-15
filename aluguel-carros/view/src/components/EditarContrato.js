@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faSave, faFileContract } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSave, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 const EditarContrato = () => {
   const { id } = useParams(); // Captura o ID do contrato da URL
@@ -72,7 +72,7 @@ const EditarContrato = () => {
 
       {/* Título */}
       <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center flex items-center justify-center">
-        <FontAwesomeIcon icon={faFileContract} className="mr-3 text-gray-700" />
+         <FontAwesomeIcon icon={faPencilAlt} className="mr-3 text-gray-700" />
         Editar Contrato
       </h1>
 

@@ -4,12 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faSave, faUserEdit } from '@fortawesome/free-solid-svg-icons';
 
+// Importa o SweetAlert2 pelo CDN
+const Swal = window.Swal;
+
 const EditarCliente = () => {
   const { id } = useParams(); // Captura o ID da URL
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
-  const [telefoneOriginal, setTelefoneOriginal] = useState(''); // Armazena o telefone original
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,29 +19,29 @@ const EditarCliente = () => {
       .then((response) => {
         setNome(response.data.nome);
         setTelefone(response.data.telefone);
-        setTelefoneOriginal(response.data.telefone); // Armazena o telefone original
       })
       .catch((error) => console.error('Erro ao buscar cliente:', error));
   }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Prepara os dados para envio
-    const dadosAtualizados = { nome };
-    if (telefone !== telefoneOriginal) {
-      dadosAtualizados.telefone = telefone; // Inclui o telefone apenas se ele foi alterado
-    }
-
-    // Atualiza os dados do cliente
-    api.put(`/clientes/${id}`, dadosAtualizados)
-      .then(() => navigate('/clientes'))
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          setError(error.response.data.error); // Exibe o erro retornado pelo back-end
-        } else {
-          console.error('Erro ao atualizar cliente:', error);
-        }
+    api.put(`/clientes/${id}`, { nome, telefone })
+      .then(() => {
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Cliente atualizado com sucesso!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => navigate('/clientes'));
+      })
+      .catch((err) => {
+        console.error('Erro ao atualizar cliente:', err);
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Erro ao atualizar cliente. Verifique os dados e tente novamente.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       });
   };
 
@@ -65,7 +66,6 @@ const EditarCliente = () => {
 
       {/* Formulário */}
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
-        {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-2 text-gray-700 font-semibold">Nome:</label>

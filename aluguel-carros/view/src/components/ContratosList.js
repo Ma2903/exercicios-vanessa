@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faFileContract, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faFileContract, faTrash, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 // Importa o SweetAlert2 pelo CDN
 const Swal = window.Swal;
@@ -112,7 +112,7 @@ const ContratosList = () => {
                   onClick={() => navigate(`/editarContrato/${contrato.id}`)}
                   className="flex items-center px-6 py-3 bg-gray-900 text-white rounded hover:bg-gray-700 transition duration-300"
                 >
-                  <FontAwesomeIcon icon={faFileContract} className="mr-2" />
+                  <FontAwesomeIcon icon={faEdit} className="mr-2" />
                   Editar
                 </button>
                 <button

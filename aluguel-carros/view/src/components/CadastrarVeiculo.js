@@ -4,24 +4,36 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCar } from '@fortawesome/free-solid-svg-icons';
 
+// Importa o SweetAlert2 pelo CDN
+const Swal = window.Swal;
+
 const CadastrarVeiculo = () => {
   const [modelo, setModelo] = useState('');
   const [marca, setMarca] = useState('');
   const [ano, setAno] = useState('');
   const [placa, setPlaca] = useState('');
-  const [error, setError] = useState('');
+  const [error] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     api.post('/veiculos', { modelo, marca, ano, placa })
-      .then(() => navigate('/veiculos'))
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          setError(error.response.data.error); // Exibe o erro retornado pelo back-end
-        } else {
-          console.error('Erro ao cadastrar veículo:', error);
-        }
+      .then(() => {
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Veículo cadastrado com sucesso!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => navigate('/veiculos'));
+      })
+      .catch((err) => {
+        console.error('Erro ao cadastrar veículo:', err);
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Erro ao cadastrar veículo. Verifique os dados e tente novamente.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       });
   };
 

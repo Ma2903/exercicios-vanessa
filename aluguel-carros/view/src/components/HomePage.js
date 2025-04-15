@@ -9,7 +9,9 @@ const HomePage = () => {
       {/* Header */}
       <header className="w-full bg-gray-900 text-white py-4 shadow-md">
         <div className="container mx-auto flex justify-between items-center px-4">
-          <h1 className="text-4xl font-extrabold tracking-wide hover:text-gray-400 transition duration-300">
+          {/* Adicionando o ícone de dinheiro no título */}
+          <h1 className="text-4xl font-extrabold tracking-wide flex items-center hover:text-gray-400 transition duration-300">
+            <FontAwesomeIcon icon={faDollarSign} className="mr-3" />
             Sistema de Aluguel de Carros
           </h1>
           <nav className="space-x-6 flex items-center">

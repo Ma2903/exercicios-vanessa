@@ -4,22 +4,34 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
+// Importa o SweetAlert2 pelo CDN
+const Swal = window.Swal;
+
 const CadastrarCliente = () => {
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
-  const [error, setError] = useState('');
+  const [error] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     api.post('/clientes', { nome, telefone })
-      .then(() => navigate('/clientes'))
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          setError(error.response.data.error); // Exibe o erro retornado pelo back-end
-        } else {
-          console.error('Erro ao cadastrar cliente:', error);
-        }
+      .then(() => {
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Cliente cadastrado com sucesso!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => navigate('/clientes'));
+      })
+      .catch((err) => {
+        console.error('Erro ao cadastrar cliente:', err);
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Erro ao cadastrar cliente. Verifique os dados e tente novamente.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       });
   };
 

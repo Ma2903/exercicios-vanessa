@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import api from '../api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faSave, faCar } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSave, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+
+// Importa o SweetAlert2 pelo CDN
+const Swal = window.Swal;
 
 const EditarVeiculo = () => {
   const { id } = useParams(); // Captura o ID da URL
@@ -34,16 +37,23 @@ const EditarVeiculo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Atualiza os dados do veículo
     api.put(`/veiculos/${id}`, { modelo, marca, ano, placa })
-      .then(() => navigate('/veiculos'))
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          setError(error.response.data.error); // Exibe o erro retornado pelo back-end
-        } else {
-          console.error('Erro ao atualizar veículo:', error);
-        }
+      .then(() => {
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Veículo atualizado com sucesso!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => navigate('/veiculos'));
+      })
+      .catch((err) => {
+        console.error('Erro ao atualizar veículo:', err);
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Erro ao atualizar veículo. Verifique os dados e tente novamente.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       });
   };
 
@@ -70,7 +80,7 @@ const EditarVeiculo = () => {
 
       {/* Título */}
       <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center flex items-center justify-center">
-        <FontAwesomeIcon icon={faCar} className="mr-3 text-gray-700" />
+         <FontAwesomeIcon icon={faPencilAlt} className="mr-3 text-gray-700" />
         Editar Veículo
       </h1>
 
